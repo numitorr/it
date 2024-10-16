@@ -6,7 +6,7 @@
 
   vars:
     report_dir: "{{ report_path | default 'rhn-support-kdwyer' }}"
-    report_name: "{{ report | default 'blah')}}"
+    report_name: "{{ report | default 'blah'}}"
 #    sharepoint_directory: "{{ sharepoint_dir | default('/sites/IT-Team-ORE/Network Documentation/009 ENS-IA Audits/Internal Audit & Remediation/Operation Data Reports/BGP Session State') }}"
   #  client_id: "xxxxxx"
   #  client_secret: "xxxxxxx"
