@@ -20,7 +20,7 @@
           #- "{{ sharepoint_directory }}"
     - name: Gather the file from sftp
       ansible.builtin.get_url:
-         url: sftp.access.redhat.com/"{{ report_dir }}/{{ report_name }}"
+         url: sftp.access.redhat.com/{{ report_dir }}/{{ report_name }}
          dest: /home/cloud-user/
          username: rhn-support-kdwyer
          password: ZsnOnWij
