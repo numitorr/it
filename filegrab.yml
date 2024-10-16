@@ -1,0 +1,27 @@
+---
+- name: Load file to sharepoint test
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    report_dir: "{{ report_path | default('/test/') }}"
+    report_name: "{{ report | blah)}}"
+#    sharepoint_directory: "{{ sharepoint_dir | default('/sites/IT-Team-ORE/Network Documentation/009 ENS-IA Audits/Internal Audit & Remediation/Operation Data Reports/BGP Session State') }}"
+  #  client_id: "xxxxxx"
+  #  client_secret: "xxxxxxx"
+
+  tasks:
+    - name: Show vars
+      ansible.builtin.debug:
+        msg:
+          - "{{ report_name }}"
+          - "{{ report_dir }}"
+          #- "{{ sharepoint_directory }}"
+    - name: Gather the file from sftp
+      ansible.builtin.get_url:
+         url: "{{ report_dir }}/{{ report_name }}"
+         dest: /home/cloud-user/
+         username: rhn-support-kdwyer
+         password: ZsnOnWij
+      delegate_to: localhost
