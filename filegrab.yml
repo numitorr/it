@@ -12,12 +12,6 @@
   #  client_secret: "xxxxxxx"
 
   tasks:
-    - name: Show vars
-      ansible.builtin.debug:
-        msg:
-          - "{{ report_name }}"
-          - "{{ report_dir }}"
-          #- "{{ sharepoint_directory }}"
     - name: Gather the file from sftp
       ansible.builtin.get_url:
          url: sftp.access.redhat.com/{{ report_dir }}/{{ report_name }}
