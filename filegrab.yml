@@ -14,5 +14,5 @@
          url: sftp.access.redhat.com/{{ report_dir }}/{{ report_name }}
          dest: /home/cloud-user/
          username: rhn-support-kdwyer
-         password: ZsnOnWij
+         password: password123
       delegate_to: localhost
