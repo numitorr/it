@@ -9,7 +9,7 @@
   #  client_secret: "xxxxxxx"
 
   tasks:
-    - name: Gather the file from sftp
+    - name: Gather the file from sftp 11
       ansible.builtin.get_url:
          url: sftp.access.redhat.com/{{ report_dir }}/{{ report_name }}
          dest: /home/cloud-user/
