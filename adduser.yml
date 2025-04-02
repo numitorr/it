@@ -1,4 +1,8 @@
 ---
+- name: Create local users and add to group
+  hosts: localhost
+  connection: local
+  gather_facts: false
 # tasks file for configure_local_users
 - name: Create local users and add to group
   ansible.builtin.user:
