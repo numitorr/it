@@ -1,4 +1,3 @@
----
 # tasks file for configure_local_users
 - name: Create local users and add to group
   ansible.builtin.user:
