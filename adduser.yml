@@ -1,73 +1,68 @@
----
 - name: Create local users and add to group
   hosts: localhost
   connection: local
   gather_facts: false
-# tasks file for configure_local_users
-- name: Create local users and add to group
-  ansible.builtin.user:
-    name: "{{ _local_users_item.usr_name }}"
-    uid: "{{ _local_users_item.usr_uid | default(omit) }}"
-    state: "{{ _local_users_item.state }}"
-    shell: "{{ _local_users_item.usr_shell | default(omit) }}"
-    comment: "{{ _local_users_item.usr_description }}"
-    group: "{{ _local_users_item.usr_grp_pri | default(omit) }}"
-    groups: "{{ _local_users_item.usr_grp_sec | default(omit) }}"
-    home: "{{ _local_users_item.usr_home_dir | default(omit) }}"
-    create_home: "{{ _local_users_item.usr_home | default(omit) }}"
-    remove: "{{ _local_users_item.usr_home_remove | default(omit) }}"
-    password_expire_min: "{{ _local_users_item.pwd_expire_min | default(omit) }}"
-    password_expire_max: "{{ _local_users_item.pwd_expire_max | default(omit) }}"
-  become: true
-  loop: "{{ local_users }}"
-  loop_control:
-    loop_var: _local_users_item
+  tasks:
+    - name: Create local users and add to group
+      ansible.builtin.user:
+        name: "{{ _local_users_item.usr_name }}"
+        uid: "{{ _local_users_item.usr_uid | default(omit) }}"
+        state: "{{ _local_users_item.state }}"
+        shell: "{{ _local_users_item.usr_shell | default(omit) }}"
+        comment: "{{ _local_users_item.usr_description }}"
+        group: "{{ _local_users_item.usr_grp_pri | default(omit) }}"
+        groups: "{{ _local_users_item.usr_grp_sec | default(omit) }}"
+        home: "{{ _local_users_item.usr_home_dir | default(omit) }}"
+        create_home: "{{ _local_users_item.usr_home | default(omit) }}"
+        remove: "{{ _local_users_item.usr_home_remove | default(omit) }}"
+        password_expire_min: "{{ _local_users_item.pwd_expire_min | default(omit) }}"
+        password_expire_max: "{{ _local_users_item.pwd_expire_max | default(omit) }}"
+      become: true
+      loop: "{{ local_users }}"
+      loop_control:
+        loop_var: _local_users_item
 
-- name: Change "number of inactivity days" details of local users
-  ansible.builtin.shell: |
-    chage -I "{{ _local_users_item.inactive_days | default(omit) }}" "{{ _local_users_item.usr_name }}"
-  become: true
-  loop: "{{ local_users }}"
-  loop_control:
-    loop_var: _local_users_item
-  when:
-    - _local_users_item.inactive_days is defined
-    - _local_users_item.state is defined and _local_users_item.state != 'absent'
-  changed_when: false
+    - name: Change "number of inactivity days" details of local users
+      ansible.builtin.shell: |
+        chage -I "{{ _local_users_item.inactive_days }}" "{{ _local_users_item.usr_name }}"
+      become: true
+      loop: "{{ local_users }}"
+      loop_control:
+        loop_var: _local_users_item
+      when:
+        - _local_users_item.inactive_days is defined
+        - _local_users_item.state is defined and _local_users_item.state != 'absent'
 
-- name: Change "number of password change warning days" details of local users
-  ansible.builtin.shell: |
-    chage -W "{{ _local_users_item.warn_days | default(omit) }}" "{{ _local_users_item.usr_name }}"
-  become: true
-  loop: "{{ local_users }}"
-  loop_control:
-    loop_var: _local_users_item
-  when:
-    - _local_users_item.warn_days is defined
-    - _local_users_item.state is defined and _local_users_item.state != 'absent'
-  changed_when: false
+    - name: Change "number of password change warning days" details of local users
+      ansible.builtin.shell: |
+        chage -W "{{ _local_users_item.warn_days }}" "{{ _local_users_item.usr_name }}"
+      become: true
+      loop: "{{ local_users }}"
+      loop_control:
+        loop_var: _local_users_item
+      when:
+        - _local_users_item.warn_days is defined
+        - _local_users_item.state is defined and _local_users_item.state != 'absent'
 
-# Code below can be used where Ansible Version is less the 2.9 and password_expire_min/max is not available!
-- name: Change "minimum password change days" details of local users
-  ansible.builtin.shell: |
-    chage -m "{{ _local_users_item.min_days | default(omit) }}" "{{ _local_users_item.usr_name }}"
-  become: true
-  loop: "{{ local_users }}"
-  loop_control:
-    loop_var: _local_users_item
-  when:
-    - _local_users_item.min_days is defined
-    - _local_users_item.state is defined and _local_users_item.state != 'absent'
-  changed_when: false
+    # Code below can be used where Ansible Version is less than 2.9 and password_expire_min/max is not available!
+    - name: Change "minimum password change days" details of local users
+      ansible.builtin.shell: |
+        chage -m "{{ _local_users_item.min_days }}" "{{ _local_users_item.usr_name }}"
+      become: true
+      loop: "{{ local_users }}"
+      loop_control:
+        loop_var: _local_users_item
+      when:
+        - _local_users_item.min_days is defined
+        - _local_users_item.state is defined and _local_users_item.state != 'absent'
 
-- name: Change "maximum password change days" details of local users
-  ansible.builtin.shell: |
-    chage -M "{{ _local_users_item.max_days | default(omit) }}" "{{ _local_users_item.usr_name }}"
-  become: true
-  loop: "{{ local_users }}"
-  loop_control:
-    loop_var: _local_users_item
-  when:
-    - _local_users_item.max_days is defined
-    - _local_users_item.state is defined and _local_users_item.state != 'absent'
-  changed_when: false
+    - name: Change "maximum password change days" details of local users
+      ansible.builtin.shell: |
+        chage -M "{{ _local_users_item.max_days }}" "{{ _local_users_item.usr_name }}"
+      become: true
+      loop: "{{ local_users }}"
+      loop_control:
+        loop_var: _local_users_item
+      when:
+        - _local_users_item.max_days is defined
+        - _local_users_item.state is defined and _local_users_item.state != 'absent'
