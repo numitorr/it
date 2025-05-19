@@ -1,5 +1,4 @@
 -name: This play is to make a key and cert
- hosts: all
  become: true
  task:
    - name: Ensure private key is present
