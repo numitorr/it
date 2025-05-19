@@ -2,7 +2,7 @@
 - name: This play is to make a key and cert
   become: true
   hosts: all
-  task:
+  tasks:
     - name: Ensure private key is present
       community.crypto.openssl_privatekey:
         path: /etc/pki/nginx/private/server.key
