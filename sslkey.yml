@@ -3,6 +3,11 @@
   become: true
   hosts: all
   tasks:
+    - name: Make the directory path
+      ansible.builtin.file:
+        path: /etc/pki/nginx/private
+        state: directory
+        mode: '0755'
     - name: Ensure private key is present
       community.crypto.openssl_privatekey:
         path: /etc/pki/nginx/private/server.key
