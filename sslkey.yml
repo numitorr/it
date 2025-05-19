@@ -14,7 +14,7 @@
         size: 2048
         mode: "0600"
         type: RSA
-        - name: Ensure self-signed cert is present
+    - name: Ensure self-signed cert is present
       community.crypto.x509_certificate:
         path: /etc/pki/nginx/server.crt
         privatekey_path: /etc/pki/nginx/privateredis-server.key
